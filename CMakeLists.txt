@@ -1045,9 +1045,11 @@ if (NOT LWS_WITHOUT_TESTAPPS)
 		message("OpenSSL executable: ${OPENSSL_EXECUTABLE}")
 	endif()
 
-	if (UNIX AND LWS_WITH_PLUGINS)
+	if (UNIX AND LWS_WITH_PLUGINS )
 		set(CMAKE_C_FLAGS "-fPIC ${CMAKE_C_FLAGS}")
-		target_link_libraries(websockets dl)
+		if( NOT( ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD" ) )
+			target_link_libraries(websockets dl)
+		endif()
 	endif()
 
 	if (NOT LWS_WITHOUT_SERVER)
